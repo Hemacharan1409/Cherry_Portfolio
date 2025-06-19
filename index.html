@@ -235,30 +235,95 @@
 
 
 
-<section id="contact" class="py-20 bg-gradient-to-r from-blue-100 to-purple-100 px-4">
-  <h2 class="text-4xl font-bold text-center text-blue-800 mb-10">Get in Touch</h2>
-  <div class="max-w-xl mx-auto text-center bg-white rounded-xl shadow-lg p-8">
-    <p class="text-lg text-gray-800 mb-4">I'd love to hear from you! Feel free to reach out using the details below.</p>
-    <div class="flex flex-col space-y-4 text-gray-700 text-md">
-      <div class="flex items-center justify-center space-x-3">
-        <img src="https://img.icons8.com/fluency/24/gmail-new.png" alt="Email Icon" class="w-6 h-6">
-        <span>Email: <a href="mailto:hemacharanlakshmipathi@gmail.com" class="text-blue-700 hover:underline">hemacharanlakshmipathi@gmail.com</a></span>
-      </div>
-      <div class="flex items-center justify-center space-x-3">
-        <img src="https://img.icons8.com/ios-filled/24/000000/phone.png" alt="Phone Icon" class="w-6 h-6">
-        <span>Phone: <a href="tel:+917093868119" class="text-blue-700 hover:underline">7093868119</a></span>
-      </div>
-      <div class="flex items-center justify-center space-x-3">
-        <img src="https://img.icons8.com/ios-filled/24/000000/marker.png" alt="Location Icon" class="w-6 h-6">
-        <span>Location: Chittoor, Andhra Pradesh</span>
+<style>
+    html {
+      scroll-behavior: smooth;
+    }
+    .perspective {
+      perspective: 1000px;
+    }
+    .transform-style-preserve-3d {
+      transform-style: preserve-3d;
+    }
+    .backface-hidden {
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+    }
+    .rotate-y-180 {
+      transform: rotateY(180deg);
+    }
+  </style>
+</head>
+<body class="bg-white text-gray-900">
+
+  <!-- Contact Flip Card Section -->
+  <section id="contact" class="py-20 bg-gradient-to-r from-blue-100 to-purple-100 px-4">
+    <h2 class="text-4xl font-bold text-center text-blue-800 mb-10">Get in Touch</h2>
+
+    <div class="flex justify-center">
+      <div class="relative w-full max-w-xl h-[520px] perspective" id="cardContainer">
+        <!-- Flip Container -->
+        <div class="transition-transform duration-700 transform-style-preserve-3d w-full h-full relative" id="cardInner">
+          
+          <!-- Front Side -->
+          <div class="absolute w-full h-full bg-white rounded-xl shadow-lg p-8 backface-hidden z-20 flex flex-col justify-center items-center">
+            <p class="text-lg text-gray-800 mb-4 text-center">I'd love to hear from you! Feel free to reach out using the details below.</p>
+            <div class="flex flex-col space-y-4 text-gray-700 text-md items-center">
+              <div class="flex items-center space-x-3">
+                <img src="https://img.icons8.com/fluency/24/gmail-new.png" alt="Email Icon" class="w-6 h-6">
+                <span>Email: <a href="mailto:hemacharanlakshmipathi@gmail.com" class="text-blue-700 hover:underline">hemacharanlakshmipathi@gmail.com</a></span>
+              </div>
+              <div class="flex items-center space-x-3">
+                <img src="https://img.icons8.com/ios-filled/24/000000/phone.png" alt="Phone Icon" class="w-6 h-6">
+                <span>Phone: <a href="tel:+917093868119" class="text-blue-700 hover:underline">7093868119</a></span>
+              </div>
+              <div class="flex items-center space-x-3">
+                <img src="https://img.icons8.com/ios-filled/24/000000/marker.png" alt="Location Icon" class="w-6 h-6">
+                <span>Location: Chittoor, Andhra Pradesh</span>
+              </div>
+            </div>
+            <div class="mt-10 text-center">
+              <button onclick="flipCard()" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-lg shadow transition duration-300">
+                Get in Touch
+              </button>
+            </div>
+          </div>
+
+          <!-- Back Side (Form) -->
+          <div class="absolute w-full h-full bg-white rounded-xl shadow-lg p-8 backface-hidden rotate-y-180 z-10 overflow-hidden pointer-events-none opacity-0" id="backSide">
+            <h3 class="text-2xl font-bold text-center text-blue-800 mb-4">Send a Message</h3>
+            <form action="https://formspree.io/f/xvgrqjog" method="POST" class="space-y-4">
+              <input type="text" name="name" placeholder="Your Name" required class="w-full p-3 border border-gray-300 rounded-lg" />
+              <input type="email" name="email" placeholder="Your Email" required class="w-full p-3 border border-gray-300 rounded-lg" />
+              <textarea name="message" placeholder="Your Message" required class="w-full p-3 border border-gray-300 rounded-lg h-32"></textarea>
+              <button type="submit" class="w-full bg-blue-600 text-white p-3 rounded-lg hover:bg-blue-700 transition">Send Message</button>
+            </form>
+            <div class="text-center mt-4">
+              <button onclick="flipCard()" type="button" class="bg-gray-500 hover:bg-gray-600 text-white font-semibold py-1 px-4 rounded-lg shadow transition duration-300">
+                Back
+              </button>
+            </div>
+          </div>
+
+        </div>
       </div>
     </div>
-    <div class="mt-10">
-      <a href="https://forms.gle/YOUR_GOOGLE_FORM_LINK" target="_blank" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-lg shadow transition duration-300">
-        Get in Touch
-      </a>
-    </div>
-  </div>
-</section>
+  </section>
+
+  <!-- JavaScript for Flip -->
+  <script>
+    let flipped = false;
+    function flipCard() {
+      const card = document.getElementById('cardInner');
+      const back = document.getElementById('backSide');
+      flipped = !flipped;
+      card.style.transform = flipped ? 'rotateY(180deg)' : 'rotateY(0deg)';
+      if (flipped) {
+        back.classList.remove('opacity-0', 'pointer-events-none');
+      } else {
+        back.classList.add('opacity-0', 'pointer-events-none');
+      }
+    }
+  </script>
 </body>
 </html>
